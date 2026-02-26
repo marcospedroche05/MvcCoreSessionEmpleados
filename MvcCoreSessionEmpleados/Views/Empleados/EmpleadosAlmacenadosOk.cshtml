@@ -1,0 +1,21 @@
+﻿@model List<Empleado>
+
+<h1 style="color:red">
+    Empleados almacenados OK
+</h1>
+<p>
+    <a asp-controller="Empleados" asp-action="SessionEmpleadosOk">Volver a empleados</a>
+</p>
+
+@if(Model == null)
+{
+    <h2 style="color:red">@ViewData["MENSAJE"]</h2>
+} else
+{
+    <ul class="list-group">
+        @foreach(Empleado emp in Model)
+        {
+            <li class="list-group-item">@emp.Apellido</li>
+        }
+    </ul>
+}
