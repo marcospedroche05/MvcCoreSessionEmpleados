@@ -1,0 +1,27 @@
+﻿@model List<Empleado>
+
+<h1 style="color:peru">
+    Empleados almacenados V5
+</h1>
+<p>
+    <a asp-controller="Empleados" asp-action="SessionEmpleadosV5">Volver a empleados</a>
+</p>
+
+@if(Context.Session.GetString("IDSEMPLEADOS") == null)
+{
+    <h2 style="color:peru">No existen empleados en session</h2>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (Empleado emp in Model)
+        {
+            <li class="list-group-item">@emp.Apellido
+                <a asp-controller="Empleados" asp-action="EmpleadosAlmacenadosV5" asp-route-ideliminar="@emp.IdEmpleado">
+                    Eliminar Session
+                </a>
+            </li>
+            
+        }
+    </ul>
+}

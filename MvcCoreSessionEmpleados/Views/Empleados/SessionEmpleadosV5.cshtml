@@ -1,0 +1,76 @@
+﻿@model List<Empleado>
+@{
+    //NECESITAMOS SESSION EN LA VISTA PARA COMPROBAR SUS DATOS
+    List<int> ids =
+    Context.Session.GetObject<List<int>>("IDSEMPLEADOS");
+    List<Empleado> favoritos = this.memoryCache.Get<List<Empleado>>("FAVORITOS"); 
+}
+
+
+<h1 style="color:mediumpurple">
+    Empleados Session V5
+</h1>
+
+@if(favoritos != null)
+{
+    <h2 style="background-color: lightgreen">
+        Empleados Favoritos: @favoritos.Count
+    </h2>
+} else
+{
+    <h2 style="background-color: lightgreen">
+        Empleados Favoritos: <b>0</b>
+    </h2>
+}
+
+<p>
+    <a asp-controller="Empleados" asp-action="EmpleadosAlmacenadosV5">
+        Empleados almacenados V5
+    </a>
+</p>
+
+<p>
+    <a asp-controller="Empleados" asp-action="EmpleadosFavoritos">
+        Empleados favoritos
+    </a>
+</p>
+
+<h3 style="color:indianred">
+    @ViewData["MENSAJE"]
+</h3>
+
+@if (Model != null)
+{
+    <ul class="list-group">
+        @foreach (Empleado empleado in Model)
+        {
+            <li class="list-group-item list-group-item-danger">
+                @empleado.Apellido
+                <a asp-controller="Empleados" asp-action="SessionEmpleadosV5"
+                asp-route-idfavorito="@empleado.IdEmpleado">Favorito</a>
+                @if(ids == null)
+                {
+                    //NO TENEMOS SESSION
+                    <a asp-controller="Empleados" asp-action="SessionEmpleadosV5"
+                       asp-route-idempleado="@empleado.IdEmpleado">
+                        Almacenar empleado
+                    </a>
+                } else
+                {
+                    //BUSCAMOS SI EL EMPLEADO QUE ESTAMOS RECORRIENDO ESTÁ EN LA LISTA
+                    if (ids.Contains(empleado.IdEmpleado))
+                    {
+                        <img src="~/images/pereira7.jpg" style="width: 40px; height: 40px"/>
+                    } else
+                    {
+                        <a asp-controller="Empleados" asp-action="SessionEmpleadosV5"
+                           asp-route-idempleado="@empleado.IdEmpleado">
+                            Almacenar empleado
+                        </a>
+                    }
+                }
+            </li>
+        }
+    </ul>
+}
+
