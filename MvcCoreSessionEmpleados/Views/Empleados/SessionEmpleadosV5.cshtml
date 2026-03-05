@@ -46,8 +46,22 @@
         {
             <li class="list-group-item list-group-item-danger">
                 @empleado.Apellido
-                <a asp-controller="Empleados" asp-action="SessionEmpleadosV5"
-                asp-route-idfavorito="@empleado.IdEmpleado">Favorito</a>
+                @if(favoritos == null)
+                {
+                    <a asp-controller="Empleados" asp-action="SessionEmpleadosV5"
+                    asp-route-idfavorito="@empleado.IdEmpleado">Favorito</a>
+                } else
+                {
+                    Empleado empFavorito = favoritos.Find(x => x.IdEmpleado == empleado.IdEmpleado);
+                    if (empFavorito != null)
+                    {
+                        <img src="~/images/pereira7.jpg" style="width: 40px; height: 40px"/>
+                    } else
+                    {
+                        <a asp-controller="Empleados" asp-action="SessionEmpleadosV5"
+                           asp-route-idfavorito="@empleado.IdEmpleado">Favorito</a>
+                    }
+                }
                 @if(ids == null)
                 {
                     //NO TENEMOS SESSION
