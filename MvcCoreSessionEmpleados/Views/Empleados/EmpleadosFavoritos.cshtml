@@ -19,7 +19,12 @@
     <ul>
         @foreach (Empleado emp in favoritos)
         {
-            <li>@emp.Apellido</li>
+            <li>
+                @emp.Apellido
+                <a asp-controller="Empleados" asp-action="EmpleadosFavoritos" asp-route-ideliminar="@emp.IdEmpleado">
+                    Delete
+                </a>
+            </li>
         }
     </ul>
 }
